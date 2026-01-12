@@ -37,8 +37,10 @@ if __name__ == "__main__":
       models = [args.model]
 
     for model_name in models:
-      print(f"Loading model from hub: {model_name}")
-      mlir_module_ir: ir.Module = load_with_rand(model_name.split('/')[0], model_name.split('/')[1])
+      repo = model_name.split('/')[0] + '/' + model_name.split('/')[1]
+      model = model_name.split('/')[2]
+      print(f"Loading model from hub: {repo}, {model}")
+      mlir_module_ir: ir.Module = load_with_rand(repo, model)
       print(f"Loaded MLIR module for model: {model_name}")
       print("\n\nModule dump:")
       mlir_module_ir.dump()
