@@ -14,8 +14,8 @@ from mlir import ir
 
 # https://docs.pytorch.org/docs/stable/hub.html#torch.hub.load
 def load_with_rand(repo: str, model: str, pretrained: bool = True):
-  model = torch.hub.load(repo, model, pretrained=pretrained, trust_repo="check")
-  input_shape = model.parameters()["input"].shape
+  model = torch.hub.load(repo, model, pretrained=pretrained, trust_repo=True)
+  input_shape = next(model.parameters()).shape
   sample_input = torch.randn(*input_shape)
   ir_context = ir.Context()
   return import_from_model(model, sample_args=(sample_input,), ir_context=ir_context)
