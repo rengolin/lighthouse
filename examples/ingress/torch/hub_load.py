@@ -14,7 +14,7 @@ from mlir import ir
 
 # https://docs.pytorch.org/docs/stable/hub.html#torch.hub.load
 def load_with_rand(repo: str, model: str, pretrained: bool = True):
-  model = torch.hub.load(repo, model, pretrained=pretrained, trust_repo=True)
+  model = torch.hub.load(repo, model, trust_repo=True) #, pretrained=pretrained)
   input_shape = next(model.parameters()).shape
   sample_input = torch.randn(*input_shape)
   ir_context = ir.Context()
@@ -26,13 +26,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model",
         type=str,
-        help="Model name (e.g., 'pytorch/vision/resnet50')",
+        help="Model name (e.g., 'pytorch/vision/resnet18')",
     )
     args = parser.parse_args()
 
     if args.model is None:
-      models = ["pytorch/vision/resnet18",
-                "huggingface/google-bert/bert-base-german-cased"]
+      models = ["pytorch/vision/resnet18"]#, "huggingface/google-bert/bert-base-german-cased"]
     else:
       models = [args.model]
 
