@@ -17,9 +17,16 @@ class PassBundles:
         "buffer-deallocation-pipeline",
     ]
 
-    # Lowers most dialects to LLVM Dialect
-    LLVMLoweringBundle = [
+    # Linalg level lowering to vector and loops. Helpful for remainder of unoptimized tensor/linalg operations.
+    LinalgLoweringBundle = [
+        "convert-tensor-to-linalg",
         "convert-linalg-to-loops",
+    ]
+
+    # Lowers most dialects to LLVM Dialect. This is required for JIT execution with the ExecutionEngine.
+    LLVMLoweringBundle = [
+        "lower-affine",
+        "convert-vector-to-scf",
         "convert-scf-to-cf",
         "convert-to-llvm",
         "reconcile-unrealized-casts",
